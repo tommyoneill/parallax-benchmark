@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="Responsive Bootstrap 5 Admin &amp; Dashboard Template">
+	<meta name="author" content="Bootlab">
+
+	<title>{% block title %}{% endblock %} -- {{name}}</title>
+
+	<link rel="canonical" href="https://appstack.bootlab.io/dashboard-default.html">
+	<link rel="shortcut icon" href="/src/img/favicon.ico">
+
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&amp;display=swap" rel="stylesheet">
+	<link class="js-stylesheet" href="/src/css/dark.css" rel="stylesheet">
+</head>
+<body data-theme="dark" data-layout="fluid" data-sidebar-position="left" data-sidebar-behavior="compact" class="">
+	<div class="wrapper">
+		<nav id="sidebar" class="sidebar">
+			<div class="sidebar-content js-simplebar" data-simplebar="init"><div class="simplebar-wrapper" style="margin: 0px;"><div class="simplebar-height-auto-observer-wrapper"><div class="simplebar-height-auto-observer"></div></div><div class="simplebar-mask"><div class="simplebar-offset" style="right: 0px; bottom: 0px;"><div class="simplebar-content-wrapper" tabindex="0" role="region" aria-label="scrollable content" style="height: auto; overflow: hidden;"><div class="simplebar-content" style="padding: 0px;">
+                <a class="sidebar-brand" href="/hello/{{name}}">
+                    {% include 'includes/parallaxsvg.html' %}   
+                </a>
+            </div>
+		</nav>
+        <div class="main">
+            {% include 'navbar.html' %}
+            {% block content %}{% endblock %}
+			<footer class="footer">
+				<div class="container-fluid">
+					<div class="row text-muted">
+						<div class="col-6 text-start">
+							<ul class="list-inline">
+								<li class="list-inline-item">
+									<a class="text-muted" href="http://www.getparallax.com">Learn more about Parallax</a>
+								</li>
+								<li class="list-inline-item">
+									<a class="text-muted" href="#">Privacy</a>
+								</li>
+								<li class="list-inline-item">
+									<a class="text-muted" href="#">Terms of Service</a>
+								</li>
+							</ul>
+						</div>
+						<div class="col-6 text-end">
+							<p class="mb-0">
+								© 2022 - <a href="/welcome" class="text-muted">Parallax Benchmark</a>
+							</p>
+						</div>
+					</div>
+				</div>
+			</footer>
+		</div>
+	</div>
+
+	<script src="/src/js/app.js"></script>
+    <script>
+		document.addEventListener("DOMContentLoaded", function() {
+            var options = {
+                legend: {
+                        position: 'bottom'
+                    },
+                chart: {
+					height: 350,
+					type: "heatmap",
+                    toolbar: {
+                        show: false,
+                    },
+				},
+				dataLabels: {
+					enabled: true,
+                    formatter: function(value, { seriesIndex, dataPointIndex, w }) {
+                        return value + "%";
+                    }
+				},
+				series: [],
+				xaxis: {
+					type: "category",
+				},
+                plotOptions: {
+                    heatmap: {
+                        shadeIntensity: 0.5,
+                        radius: 0,
+                        useFillColorAsStroke: true,
+                        colorScale: {
+                            ranges: [{
+                                from: 0,
+                                to: 64,
+                                color: '#FF32AA',
+                                name: 'Herioc < 65',
+                                },
+                                {
+                                from: 65,
+                                to: 84,
+                                color: '#8ABAF3',
+                                name: 'Operational >= 65',
+                                },
+                                {
+                                from: 85,
+                                to: 100,
+                                color: '#00C87B',
+                                name: 'Strategic >= 85',
+                                }
+                            ]
+                        }
+                    }
+                }
+			}
+            var chart = new ApexCharts(
+				document.querySelector("#apexcharts-heatmap"),
+				options
+			);
+            var url = 'http://benchmark.test/data/utilization';
+            $.getJSON(url, function(response) {
+                chart.updateSeries(response)
+            });
+			chart.render();
+		});
+	</script>
+    <script>
+		document.addEventListener("DOMContentLoaded", function() {
+			// Mixed chart
+			var options = {
+				chart: {
+					height: 350,
+					type: "line",
+					stacked: false,
+                    toolbar: {
+                        show: false,
+                    },
+				},
+				stroke: {
+					width: [3,3,3,3],
+					curve: "straight"
+				},
+				plotOptions: {
+					bar: {
+						columnWidth: "50%"
+					}
+				},
+				series: [{
+					name: "Actual",
+					type: "column",
+					data: [0,0,0,0,0,0,0,0,0,0,0]
+				}, {
+					name: "Herioc < 65",
+					type: "line",
+					data: [65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65]
+				}, {
+					name: "Operational >= 65",
+					type: "line",
+					data: [75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75]
+				}, {
+					name: "Strategic >= 85",
+					type: "line",
+					data: [85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85]
+				}],
+				fill: {
+                },
+				labels: ["01/01/2003", "02/01/2003", "03/01/2003", "04/01/2003", "05/01/2003", "06/01/2003", "07/01/2003", "08/01/2003", "09/01/2003", "10/01/2003",
+					"11/01/2003"],
+				markers: {
+					size: 0
+				},
+				xaxis: {
+					type: "datetime",
+				},
+				yaxis: {
+					title: {
+						text: "Points",
+					},
+                    max: 100,
+					min: 30,
+				},
+				tooltip: {
+					shared: true,
+					intersect: false,
+					y: {
+						formatter: function(y) {
+							if (typeof y !== "undefined") {
+								return y.toFixed(0) + " points";
+							}
+							return y;
+						}
+					}
+				},
+                colors: ["#F7A424","#FF32AA","#8ABAF3","#00C87B"],
+                grid: {
+                    show: true,
+                    borderColor: '#202634',
+                    strokeDashArray: 0,
+                    position: 'back',
+                    xaxis: {
+                        lines: {
+                            show: true
+                        }
+                    },   
+                    yaxis: {
+                        lines: {
+                            show: true
+                        }
+                    },  
+                    row: {
+                        colors: undefined,
+                        opacity: 0.5
+                    },  
+                    column: {
+                        colors: undefined,
+                        opacity: 0.5
+                    }, 
+                }                
+			}
+            var chart = new ApexCharts(
+				document.querySelector("#util-benchmark"),
+				options
+			);
+            var url = 'http://benchmark.test/data/utilbench';
+
+            $.getJSON(url, function(response) {
+                chart.updateSeries(response)
+            });
+
+            console.log(JSON.stringify(options.series));
+			chart.render();
+		});
+	</script>
+</body>
+</html>

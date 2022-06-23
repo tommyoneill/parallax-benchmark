@@ -1,0 +1,4 @@
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^ index.php [QSA,L]
+SetEnv GOOGLE_APPLICATION_CREDENTIALS /Users/tomoneill/keys/parallax-benchmark-29672f6c8ac7.json
