@@ -1,0 +1,12 @@
+##### MacOS
+# General
+.DS_Store
+.AppleDouble
+.LSOverride
+
+#app specific
+app.yaml
+
+##### Composer
+composer.phar
+/vendor/
